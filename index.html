@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiexxPayment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00ffcc, #00ccff, #ff00cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ffcc, #00ccff);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .dot:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .payment-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .payment-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        
+        .payment-method {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .payment-method h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #00ccff;
+        }
+        
+        .payment-method i {
+            font-size: 1.5rem;
+        }
+        
+        .payment-details {
+            margin-left: 30px;
+        }
+        
+        .payment-details p {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #00ffcc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 255, 204, 0.2);
+        }
+        
+        .qris-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .qris-container img {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 204, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+        }
+        
+        .warning {
+            text-align: center;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+        
+        .warning p {
+            color: #ff6666;
+            font-weight: 500;
+        }
+        
+        .panel {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+        
+        .panel-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+        
+        .panel-list {
+            list-style: none;
+        }
+        
+        .panel-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .panel-list li:last-child {
+            border-bottom: none;
+            color: #ff3366;
+            font-weight: bold;
+        }
+        
+        .owner {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .password-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .password-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 50px;
+            padding: 12px 20px;
+            color: white;
+            width: 100%;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .password-input:focus {
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #00ffcc, #00ccff);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            color: #0f0c29;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #00ffcc, 0 0 20px #00ffcc;
+            color: #fff;
+            animation: flicker 1.5s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #00ffcc, 0 0 20px #00ffcc;
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1 class="neon-text">RiexxPayment</h1>
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        
+        <div class="password-container" id="passwordSection">
+            <input type="text" class="password-input" id="passwordInput" placeholder="Ketik 'DanaRiex' untuk melihat payment">
+            <button class="submit-btn" onclick="checkPassword()">Lihat Payment</button>
+        </div>
+        
+        <div id="paymentSection" class="hidden">
+            <div class="payment-container">
+                <div class="payment-header">
+                    <h2>Metode Pembayaran</h2>
+                    <p>Pilih metode pembayaran yang diinginkan</p>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fab fa-dana"></i> DANA</h3>
+                    <div class="payment-details">
+                        <p>083898472764</p>
+                        <p>A/N: TF Saja</p>
+                        <button class="copy-btn" onclick="copyText('083898472764')">Salin Nomor</button>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-money-bill-wave"></i> OVO</h3>
+                    <div class="payment-details">
+                        <p>083898472764</p>
+                        <p>A/N: TF saja</p>
+                        <button class="copy-btn" onclick="copyText('083898472764')">Salin Nomor</button>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fab fa-google-wallet"></i> GOPAY</h3>
+                    <div class="payment-details">
+                        <p>083898472764</p>
+                        <p>A/N: TF saja</p>
+                        <button class="copy-btn" onclick="copyText('083898472764')">Salin Nomor</button>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <h3><i class="fas fa-university"></i> BANK BRI</h3>
+                    <div class="payment-details">
+                        <p>016601091431503</p>
+                        <p>A/N: ATIAH</p>
+                        <button class="copy-btn" onclick="copyText('016601091431503')">Salin Nomor</button>
+                    </div>
+                </div>
+                
+                <div class="qris-container">
+                    <h3><i class="fas fa-qrcode"></i> QRIS</h3>
+                    <img src="https://files.catbox.moe/237j5t.jpg" alt="QR Code">
+                    <p>Scan QR code untuk pembayaran</p>
+                </div>
+            </div>
+            
+            <div class="warning">
+                <p><i class="fas fa-exclamation-circle"></i> Jangan Lupa Kirim Bukti Setelah Transfer untuk Kemananan bersama</p>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-title neon-text">╭━━⚡ PANEL PRIVATE ⚡━━╮</div>
+                <ul class="panel-list">
+                    <li><span>✅ 1GB – 1K</span> <span>✅ 6GB – 6K</span></li>
+                    <li><span>✅ 2GB – 2K</span> <span>✅ 7GB – 7K</span></li>
+                    <li><span>✅ 3GB – 3K</span> <span>✅ 8GB – 8K</span></li>
+                    <li><span>✅ 4GB – 4K</span> <span>✅ 9GB – 9K</span></li>
+                    <li><span>✅ 5GB – 5K</span> <span>✅ 10GB – 10K</span></li>
+                    <li>🔥 UNLIMITED – 15K 🔥</li>
+                </ul>
+            </div>
+            
+            <div class="owner">
+                <p>Untuk pertanyaan, hubungi:</p>
+                <p><i class="fas fa-phone"></i> 6283898472764</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === 'Payment') {
+                document.getElementById('passwordSection').classList.add('hidden');
+                document.getElementById('paymentSection').classList.remove('hidden');
+            } else {
+                alert('Password salah! Ketik "Payment" untuk melihat payment.');
+            }
+        }
+        
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Teks disalin: ' + text);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        }
+        
+        // Enter key support for password input
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
